@@ -32,10 +32,14 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
         <span className="absolute -bottom-12 -left-8 size-36 rounded-full bg-black/10 blur-2xl" aria-hidden="true" />
       </Link>
 
-      <div className="relative flex flex-1 flex-col p-5 pt-7">
-        <div className="absolute -top-6 left-5 flex size-12 items-center justify-center overflow-hidden rounded-xl border-4 border-white bg-ink text-sm font-bold text-white shadow-md">
+      <div className="relative flex flex-1 flex-col p-5 pt-9">
+        <div
+          className={`absolute -top-7 left-5 flex size-14 items-center justify-center overflow-hidden rounded-2xl border-2 border-white text-base font-bold shadow-md ${
+            project.logoUrl ? "bg-white" : "bg-ink text-white"
+          }`}
+        >
           {project.logoUrl ? (
-            <SmartImage src={project.logoUrl} alt="" width={48} height={48} className="h-full w-full object-cover" />
+            <SmartImage src={project.logoUrl} alt="" width={56} height={56} className="h-full w-full object-contain" />
           ) : (
             project.title.charAt(0).toUpperCase()
           )}

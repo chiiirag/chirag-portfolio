@@ -87,7 +87,7 @@ export function SkillsCard({ skills }: { skills: Skill[] }) {
         subtitle="Tools and technologies I use to build modern mobile applications."
       />
       {skills.length > 0 ? (
-        <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4">
+        <ul className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9">
           {skills.map((skill) => (
             <li
               key={skill.id}

@@ -52,10 +52,8 @@ export default async function HomePage() {
     <div className="container-page space-y-6 py-6 sm:py-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
 
-      <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
-        <Hero profile={profile} />
-        <SkillsCard skills={skills} />
-      </div>
+      <Hero profile={profile} />
+      <SkillsCard skills={skills} />
 
       <FeaturedProjects projects={projects} />
       <CtaCard profile={profile} />

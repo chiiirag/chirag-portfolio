@@ -82,16 +82,6 @@ export const defaultProjects = [
   },
 ];
 
-export const defaultTestimonials = [
-  {
-    name: "Client",
-    role: "Product Founder",
-    content:
-      "Chirag delivered a high quality Flutter app with great attention to detail. Communication was clear and he was easy to work with throughout the project.",
-    rating: 5,
-  },
-];
-
 export const defaultServices = [
   { title: "End-to-End Development", description: "From idea to App Store & Play Store", icon: "rocket" },
   { title: "Clean & Scalable Code", description: "Maintainable and future-ready apps", icon: "settings" },

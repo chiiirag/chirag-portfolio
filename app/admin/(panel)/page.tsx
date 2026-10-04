@@ -1,20 +1,20 @@
 import { count, desc, eq } from "drizzle-orm";
-import { ArrowRight, FolderKanban, Inbox, MessageSquareQuote, Sparkles } from "lucide-react";
+import { ArrowRight, FolderKanban, Images, Inbox, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { PageHeader } from "@/components/admin/page-header";
 import { requireAdmin } from "@/lib/auth/session";
 import { getDb } from "@/lib/db";
-import { messages, projects, skills, testimonials } from "@/lib/db/schema";
+import { media, messages, projects, skills } from "@/lib/db/schema";
 import { formatDate } from "@/lib/utils";
 
 export default async function DashboardPage() {
   await requireAdmin();
   const db = getDb();
 
-  const [[projectCount], [skillCount], [testimonialCount], [unreadCount], recent] = await Promise.all([
+  const [[projectCount], [skillCount], [mediaCount], [unreadCount], recent] = await Promise.all([
     db.select({ value: count() }).from(projects),
     db.select({ value: count() }).from(skills),
-    db.select({ value: count() }).from(testimonials),
+    db.select({ value: count() }).from(media),
     db.select({ value: count() }).from(messages).where(eq(messages.read, false)),
     db.select().from(messages).orderBy(desc(messages.createdAt)).limit(5),
   ]);
@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   const cards = [
     { label: "Projects", value: projectCount.value, href: "/admin/projects", icon: FolderKanban },
     { label: "Skills", value: skillCount.value, href: "/admin/skills", icon: Sparkles },
-    { label: "Testimonials", value: testimonialCount.value, href: "/admin/testimonials", icon: MessageSquareQuote },
+    { label: "Media files", value: mediaCount.value, href: "/admin/media", icon: Images },
     { label: "Unread messages", value: unreadCount.value, href: "/admin/messages", icon: Inbox },
   ];
 

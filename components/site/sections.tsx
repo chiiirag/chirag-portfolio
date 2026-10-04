@@ -2,13 +2,12 @@ import { ArrowRight, Download, Mail, MapPin, MessageCircle, Phone, Star } from "
 import Link from "next/link";
 import { SkillIcon } from "@/components/ui/skill-icon";
 import { SmartImage } from "@/components/ui/smart-image";
-import type { Profile, Project, Service, Skill, Stat, Testimonial } from "@/lib/db/schema";
+import type { Profile, Project, Service, Skill, Stat } from "@/lib/db/schema";
 import { DynamicIcon, GithubIcon, LinkedinIcon } from "@/lib/icons";
 import { telHref, whatsappHref } from "@/lib/utils";
 import { ContactForm } from "./contact-form";
 import { PhoneMockups } from "./phone-mockup";
 import { ProjectCard } from "./project-card";
-import { TestimonialsCarousel } from "./testimonials-carousel";
 
 function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
   return (
@@ -32,8 +31,7 @@ export function Hero({ profile, stats }: { profile: Profile; stats: Stat[] }) {
             </span>
           )}
           <h1 className="mt-5 text-4xl leading-[1.05] font-extrabold tracking-tight text-ink sm:text-5xl xl:text-6xl">
-            {profile.headline}{" "}
-            {profile.headlineHighlight && <span className="text-brand-600">{profile.headlineHighlight}</span>}
+            {profile.headline} {profile.headlineHighlight && <span className="text-brand-600">{profile.headlineHighlight}</span>}
           </h1>
           {profile.bio && <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">{profile.bio}</p>}
 
@@ -126,12 +124,15 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
           title="Featured Projects"
           subtitle="A selection of mobile apps I've built and contributed to."
         />
-        <Link href="/projects" className="inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700">
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700"
+        >
           View All Projects <ArrowRight className="size-4" aria-hidden="true" />
         </Link>
       </div>
       {projects.length > 0 ? (
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-2">
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
@@ -143,34 +144,21 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
   );
 }
 
-export function TestimonialsCard({ testimonials }: { testimonials: Testimonial[] }) {
-  if (testimonials.length === 0) return null;
-  return (
-    <section className="card p-6 sm:p-8">
-      <SectionHeader
-        eyebrow="Testimonials"
-        title="Client Feedback"
-        subtitle="What founders and businesses say about working with me."
-      />
-      <div className="mt-6">
-        <TestimonialsCarousel
-          items={testimonials.map(({ id, name, role, content, avatarUrl, rating }) => ({ id, name, role, content, avatarUrl, rating }))}
-        />
-      </div>
-    </section>
-  );
-}
-
 export function CtaCard({ profile }: { profile: Profile }) {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy via-[#0f1f4d] to-brand-900 p-6 text-white shadow-card sm:p-8">
+    <section className="relative flex flex-col gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-navy via-[#0f1f4d] to-brand-900 p-6 text-white shadow-card sm:p-10 md:flex-row md:items-center md:justify-between">
       <div className="absolute -top-16 -right-16 size-48 rounded-full bg-brand-500/30 blur-3xl" aria-hidden="true" />
-      <span className="inline-flex rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold tracking-wider uppercase">
-        Let&apos;s work together
-      </span>
-      <h2 className="mt-3 text-2xl font-bold">{profile.ctaTitle || "Have a Mobile App Idea?"}</h2>
-      {profile.ctaText && <p className="mt-2 text-sm leading-relaxed text-white/75">{profile.ctaText}</p>}
-      <Link href="/#contact" className="btn mt-5 bg-white text-ink hover:bg-brand-50">
+      <div className="relative max-w-2xl">
+        <span className="inline-flex rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold tracking-wider uppercase">
+          Let&apos;s work together
+        </span>
+        <h2 className="mt-3 text-2xl font-bold sm:text-3xl">{profile.ctaTitle || "Have a Mobile App Idea?"}</h2>
+        {profile.ctaText && <p className="mt-2 text-sm leading-relaxed text-white/75 sm:text-base">{profile.ctaText}</p>}
+      </div>
+      <Link
+        href="/#contact"
+        className="btn relative shrink-0 self-start bg-white px-6 py-3 text-ink hover:bg-brand-50 md:self-auto"
+      >
         Get in Touch <ArrowRight className="size-4" aria-hidden="true" />
       </Link>
     </section>
@@ -243,7 +231,13 @@ export function ContactSection({ profile }: { profile: Profile }) {
   const items = [
     profile.email && { icon: Mail, label: "Email", value: profile.email, href: `mailto:${profile.email}` },
     profile.phone && { icon: Phone, label: "Phone", value: profile.phone, href: telHref(profile.phone) },
-    profile.phone && { icon: MessageCircle, label: "WhatsApp", value: "Chat on WhatsApp", href: whatsappHref(profile.phone), external: true },
+    profile.phone && {
+      icon: MessageCircle,
+      label: "WhatsApp",
+      value: "Chat on WhatsApp",
+      href: whatsappHref(profile.phone),
+      external: true,
+    },
     profile.location && { icon: MapPin, label: "Location", value: profile.location },
   ].filter(Boolean) as Array<{ icon: typeof Mail; label: string; value: string; href?: string; external?: boolean }>;
 

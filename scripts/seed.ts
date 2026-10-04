@@ -6,14 +6,7 @@ import { count } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import type { PgTable } from "drizzle-orm/pg-core";
 import { Pool } from "pg";
-import {
-  defaultProfile,
-  defaultProjects,
-  defaultServices,
-  defaultSkills,
-  defaultStats,
-  defaultTestimonials,
-} from "../lib/defaults";
+import { defaultProfile, defaultProjects, defaultServices, defaultSkills, defaultStats } from "../lib/defaults";
 import * as schema from "../lib/db/schema";
 
 config({ path: [".env.local", ".env"], quiet: true });
@@ -30,7 +23,10 @@ async function main() {
   };
 
   try {
-    await db.insert(schema.profile).values({ id: 1, ...defaultProfile }).onConflictDoNothing();
+    await db
+      .insert(schema.profile)
+      .values({ id: 1, ...defaultProfile })
+      .onConflictDoNothing();
     console.log("✓ profile");
 
     if (await isEmpty(schema.stats)) {
@@ -44,10 +40,6 @@ async function main() {
     if (await isEmpty(schema.projects)) {
       await db.insert(schema.projects).values(defaultProjects.map((p, i) => ({ ...p, sortOrder: i })));
       console.log("✓ projects");
-    }
-    if (await isEmpty(schema.testimonials)) {
-      await db.insert(schema.testimonials).values(defaultTestimonials.map((t, i) => ({ ...t, sortOrder: i })));
-      console.log("✓ testimonials");
     }
     if (await isEmpty(schema.services)) {
       await db.insert(schema.services).values(defaultServices.map((s, i) => ({ ...s, sortOrder: i })));

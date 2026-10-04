@@ -3,7 +3,7 @@
 Personal portfolio with a built-in admin panel. Next.js 16 (App Router), Tailwind CSS v4, Drizzle ORM and Neon Postgres. Deploys to Vercel.
 
 - **Public site** — `/`, `/projects`, `/projects/[slug]`. Pages are statically generated and regenerated as soon as content changes in the admin panel.
-- **Admin panel** — `/admin`. Manage the profile, hero stats, projects, skills, testimonials and services, upload images to the media library, and read contact-form messages.
+- **Admin panel** — `/admin`. Manage the profile, hero stats, projects, skills and services, upload images to the media library, and read contact-form messages.
 
 ## Environment variables
 
@@ -70,7 +70,7 @@ Images and PDFs uploaded in the admin panel are stored in the `media` table in N
 - Large photos are resized in the browser (max 2000px, WebP) before upload; files must be 4MB or smaller.
 - Files are checked by their actual contents (PNG, JPG, WebP, GIF, AVIF, PDF only).
 - Responses are cached by the browser and Vercel's CDN for a year, so most visits never touch the database.
-- A file that's still used by the profile, a project, a testimonial or a skill can't be deleted.
+- A file that's still used by the profile, a project or a skill can't be deleted.
 
 Neon's free plan includes 0.5 GB of storage, which fits several hundred compressed images.
 

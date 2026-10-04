@@ -76,18 +76,6 @@ export const projects = pgTable("projects", {
   ...timestamps,
 });
 
-export const testimonials = pgTable("testimonials", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 120 }).notNull(),
-  role: varchar("role", { length: 160 }).notNull().default(""),
-  content: text("content").notNull(),
-  avatarUrl: text("avatar_url").notNull().default(""),
-  rating: integer("rating").notNull().default(5),
-  sortOrder: integer("sort_order").notNull().default(0),
-  visible: boolean("visible").notNull().default(true),
-  ...timestamps,
-});
-
 export const services = pgTable("services", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 120 }).notNull(),
@@ -136,7 +124,6 @@ export type Profile = typeof profile.$inferSelect;
 export type Stat = typeof stats.$inferSelect;
 export type Skill = typeof skills.$inferSelect;
 export type Project = typeof projects.$inferSelect;
-export type Testimonial = typeof testimonials.$inferSelect;
 export type Service = typeof services.$inferSelect;
 export type Message = typeof messages.$inferSelect;
 export type Media = Omit<typeof media.$inferSelect, "data">;

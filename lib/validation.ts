@@ -84,16 +84,6 @@ export const projectSchema = z.object({
   sortOrder,
 });
 
-export const testimonialSchema = z.object({
-  name: required(120),
-  role: text(160),
-  content: required(2000),
-  avatarUrl: url,
-  rating: z.coerce.number().int().min(1).max(5).default(5),
-  sortOrder,
-  visible: checkbox,
-});
-
 export const serviceSchema = z.object({
   title: required(120),
   description: text(240),

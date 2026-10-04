@@ -2,7 +2,7 @@ import "server-only";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { cache } from "react";
 import { getDb } from "./db";
-import { profile, projects, services, skills, stats, testimonials, type Profile } from "./db/schema";
+import { profile, projects, services, skills, stats, type Profile } from "./db/schema";
 import { defaultProfile } from "./defaults";
 
 // Public, read-only queries. Pages using these are statically generated and
@@ -48,14 +48,6 @@ export const getProjectBySlug = cache(async (slug: string) => {
     .limit(1);
   return row ?? null;
 });
-
-export const getVisibleTestimonials = cache(async () =>
-  getDb()
-    .select()
-    .from(testimonials)
-    .where(eq(testimonials.visible, true))
-    .orderBy(asc(testimonials.sortOrder), desc(testimonials.createdAt)),
-);
 
 export const getServices = cache(async () =>
   getDb().select().from(services).orderBy(asc(services.sortOrder), asc(services.id)),

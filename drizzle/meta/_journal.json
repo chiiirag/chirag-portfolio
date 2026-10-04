@@ -29,6 +29,13 @@
       "when": 1791110545760,
       "tag": "0003_experiences",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791112149217,
+      "tag": "0004_drop_stats",
+      "breakpoints": true
     }
   ]
 }

@@ -6,7 +6,7 @@ import { count } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import type { PgTable } from "drizzle-orm/pg-core";
 import { Pool } from "pg";
-import { defaultExperiences, defaultProfile, defaultProjects, defaultServices, defaultSkills, defaultStats } from "../lib/defaults";
+import { defaultExperiences, defaultProfile, defaultProjects, defaultServices, defaultSkills } from "../lib/defaults";
 import * as schema from "../lib/db/schema";
 
 config({ path: [".env.local", ".env"], quiet: true });
@@ -29,10 +29,6 @@ async function main() {
       .onConflictDoNothing();
     console.log("✓ profile");
 
-    if (await isEmpty(schema.stats)) {
-      await db.insert(schema.stats).values(defaultStats.map((s, i) => ({ ...s, sortOrder: i })));
-      console.log("✓ stats");
-    }
     if (await isEmpty(schema.skills)) {
       await db.insert(schema.skills).values(defaultSkills.map((s, i) => ({ ...s, sortOrder: i })));
       console.log("✓ skills");

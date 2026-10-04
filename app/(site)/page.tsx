@@ -9,7 +9,7 @@ import {
   ServicesStrip,
   SkillsCard,
 } from "@/components/site/sections";
-import { getFeaturedProjects, getProfile, getServices, getStats, getVisibleExperiences, getVisibleSkills } from "@/lib/data";
+import { getFeaturedProjects, getProfile, getServices, getVisibleExperiences, getVisibleSkills } from "@/lib/data";
 import { siteUrl } from "@/lib/utils";
 
 // Regenerated on demand by the admin panel; this is a safety-net refresh interval.
@@ -29,9 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [profile, stats, skills, projects, services, experiences] = await Promise.all([
+  const [profile, skills, projects, services, experiences] = await Promise.all([
     getProfile(),
-    getStats(),
     getVisibleSkills(),
     getFeaturedProjects(),
     getServices(),
@@ -54,7 +53,7 @@ export default async function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
 
       <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
-        <Hero profile={profile} stats={stats} />
+        <Hero profile={profile} />
         <SkillsCard skills={skills} />
       </div>
 

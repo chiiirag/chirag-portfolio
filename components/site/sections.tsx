@@ -1,10 +1,10 @@
-import { ArrowRight, Briefcase, Download, Mail, MapPin, MessageCircle, Phone, Star } from "lucide-react";
+import { ArrowRight, Briefcase, Download, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SkillIcon } from "@/components/ui/skill-icon";
 import { SmartImage } from "@/components/ui/smart-image";
 import { formatDuration, formatMonth } from "@/lib/dates";
-import type { Experience, Profile, Project, Service, Skill, Stat } from "@/lib/db/schema";
+import type { Experience, Profile, Project, Service, Skill } from "@/lib/db/schema";
 import { DynamicIcon, GithubIcon, LinkedinIcon } from "@/lib/icons";
 import { telHref, whatsappHref } from "@/lib/utils";
 import heroMockup from "@/public/hero-mockup.png";
@@ -21,7 +21,7 @@ function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: s
   );
 }
 
-export function Hero({ profile, stats }: { profile: Profile; stats: Stat[] }) {
+export function Hero({ profile }: { profile: Profile }) {
   return (
     <section id="home" className="card relative scroll-mt-24 overflow-hidden p-6 sm:p-10">
       <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_1fr] xl:grid-cols-[1.3fr_1fr]">
@@ -45,22 +45,6 @@ export function Hero({ profile, stats }: { profile: Profile; stats: Stat[] }) {
               Get in Touch
             </Link>
           </div>
-
-          {stats.length > 0 && (
-            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4 xl:grid-cols-2">
-              {stats.map((stat) => (
-                <div key={stat.id} className="flex flex-col-reverse">
-                  <dt className="text-sm text-slate-500">{stat.label}</dt>
-                  <dd className="flex items-center gap-1 text-3xl font-bold text-ink">
-                    {stat.value}
-                    {/satisfaction|rating/i.test(stat.label) && (
-                      <Star className="size-6 fill-amber-400 text-amber-400" aria-hidden="true" />
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          )}
         </div>
 
         <div className="relative min-w-0">

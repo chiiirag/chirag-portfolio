@@ -49,13 +49,6 @@ And yes, I do read the whole ticket before asking, "Have you tried restarting it
     "Chirag Dafda — Senior Flutter Developer in Surat, India with 5+ years building production-ready iOS & Android apps. Clean architecture, Firebase, BLoC. Open to remote, hourly & contract work.",
 };
 
-export const defaultStats = [
-  { value: "5+", label: "Years with Flutter" },
-  { value: "3", label: "Companies Worked With" },
-  { value: "2", label: "Platforms, One Codebase" },
-  { value: "Remote", label: "Hourly & Contract" },
-];
-
 export const defaultSkills = [
   { name: "Flutter", icon: "flutter", category: "Framework" },
   { name: "Dart", icon: "dart", category: "Language" },

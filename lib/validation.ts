@@ -40,12 +40,6 @@ export const profileSchema = z.object({
   seoDescription: text(300),
 });
 
-export const statSchema = z.object({
-  value: required(40),
-  label: required(80),
-  sortOrder,
-});
-
 export const skillSchema = z.object({
   name: required(80),
   icon: text(2000),

@@ -3,7 +3,7 @@
 Personal portfolio with a built-in admin panel. Next.js 16 (App Router), Tailwind CSS v4, Drizzle ORM and Neon Postgres. Deploys to Vercel.
 
 - **Public site** — `/`, `/projects`, `/projects/[slug]`. Pages are statically generated and regenerated as soon as content changes in the admin panel.
-- **Admin panel** — `/admin`. Manage the profile, hero stats, projects, skills and services, upload images to the media library, and read contact-form messages.
+- **Admin panel** — `/admin`. Manage the profile, projects, experience, skills and services, upload images to the media library, and read contact-form messages.
 
 ## Environment variables
 

@@ -2,7 +2,7 @@ import "server-only";
 import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { cache } from "react";
 import { getDb } from "./db";
-import { experiences, profile, projects, services, skills, stats, type Profile } from "./db/schema";
+import { experiences, profile, projects, services, skills, type Profile } from "./db/schema";
 import { defaultProfile } from "./defaults";
 
 // Public, read-only queries. Pages using these are statically generated and
@@ -14,8 +14,6 @@ export const getProfile = cache(async (): Promise<Profile> => {
   const now = new Date();
   return { id: 1, ...defaultProfile, createdAt: now, updatedAt: now };
 });
-
-export const getStats = cache(async () => getDb().select().from(stats).orderBy(asc(stats.sortOrder), asc(stats.id)));
 
 export const getVisibleSkills = cache(async () =>
   getDb().select().from(skills).where(eq(skills.visible, true)).orderBy(asc(skills.sortOrder), asc(skills.id)),

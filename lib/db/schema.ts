@@ -37,14 +37,6 @@ export const profile = pgTable("profile", {
   ...timestamps,
 });
 
-export const stats = pgTable("stats", {
-  id: serial("id").primaryKey(),
-  value: varchar("value", { length: 40 }).notNull(),
-  label: varchar("label", { length: 80 }).notNull(),
-  sortOrder: integer("sort_order").notNull().default(0),
-  ...timestamps,
-});
-
 export const skills = pgTable("skills", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 80 }).notNull(),
@@ -140,7 +132,6 @@ export const media = pgTable(
 );
 
 export type Profile = typeof profile.$inferSelect;
-export type Stat = typeof stats.$inferSelect;
 export type Skill = typeof skills.$inferSelect;
 export type Project = typeof projects.$inferSelect;
 export type Service = typeof services.$inferSelect;

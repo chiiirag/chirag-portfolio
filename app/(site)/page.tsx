@@ -3,12 +3,13 @@ import {
   AboutSection,
   ContactSection,
   CtaCard,
+  ExperienceSection,
   FeaturedProjects,
   Hero,
   ServicesStrip,
   SkillsCard,
 } from "@/components/site/sections";
-import { getFeaturedProjects, getProfile, getServices, getStats, getVisibleSkills } from "@/lib/data";
+import { getFeaturedProjects, getProfile, getServices, getStats, getVisibleExperiences, getVisibleSkills } from "@/lib/data";
 import { siteUrl } from "@/lib/utils";
 
 // Regenerated on demand by the admin panel; this is a safety-net refresh interval.
@@ -28,12 +29,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [profile, stats, skills, projects, services] = await Promise.all([
+  const [profile, stats, skills, projects, services, experiences] = await Promise.all([
     getProfile(),
     getStats(),
     getVisibleSkills(),
     getFeaturedProjects(),
     getServices(),
+    getVisibleExperiences(),
   ]);
 
   const jsonLd = {
@@ -61,6 +63,7 @@ export default async function HomePage() {
 
       <ServicesStrip services={services} />
       <AboutSection profile={profile} />
+      <ExperienceSection experiences={experiences} />
       <ContactSection profile={profile} />
     </div>
   );

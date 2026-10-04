@@ -1,4 +1,4 @@
-import { boolean, customType, index, integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, customType, date, index, integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 const bytea = customType<{ data: Buffer; driverData: Buffer }>({
   dataType: () => "bytea",
@@ -103,6 +103,25 @@ export const messages = pgTable(
   ],
 );
 
+/** Work history shown as a timeline. A null end date means "Present". */
+export const experiences = pgTable("experiences", {
+  id: serial("id").primaryKey(),
+  role: varchar("role", { length: 120 }).notNull(),
+  company: varchar("company", { length: 120 }).notNull(),
+  companyUrl: text("company_url").notNull().default(""),
+  logoUrl: text("logo_url").notNull().default(""),
+  employmentType: varchar("employment_type", { length: 40 }).notNull().default(""),
+  location: varchar("location", { length: 120 }).notNull().default(""),
+  workMode: varchar("work_mode", { length: 40 }).notNull().default(""),
+  // First day of the start/end month, e.g. 2024-09-01.
+  startDate: date("start_date", { mode: "string" }).notNull(),
+  endDate: date("end_date", { mode: "string" }),
+  description: text("description").notNull().default(""),
+  skills: text("skills").array().notNull().default([]),
+  visible: boolean("visible").notNull().default(true),
+  ...timestamps,
+});
+
 /** Uploaded files (images, resume PDF) stored in Postgres and served from /media/<id>. */
 export const media = pgTable(
   "media",
@@ -125,5 +144,6 @@ export type Stat = typeof stats.$inferSelect;
 export type Skill = typeof skills.$inferSelect;
 export type Project = typeof projects.$inferSelect;
 export type Service = typeof services.$inferSelect;
+export type Experience = typeof experiences.$inferSelect;
 export type Message = typeof messages.$inferSelect;
 export type Media = Omit<typeof media.$inferSelect, "data">;

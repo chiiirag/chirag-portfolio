@@ -23,7 +23,7 @@ export function TextField({
   placeholder,
 }: BaseProps & {
   defaultValue?: string | number;
-  type?: "text" | "email" | "url" | "number" | "tel";
+  type?: "text" | "email" | "url" | "number" | "tel" | "month";
   required?: boolean;
   maxLength?: number;
   placeholder?: string;

@@ -84,6 +84,46 @@ export const projectSchema = z.object({
   sortOrder,
 });
 
+const month = z
+  .string()
+  .trim()
+  .regex(/^\d{4}-(0[1-9]|1[0-2])$/, "Pick a month");
+
+export const experienceSchema = z
+  .object({
+    role: required(120),
+    company: required(120),
+    companyUrl: url,
+    logoUrl: url,
+    employmentType: text(40),
+    location: text(120),
+    workMode: text(40),
+    startMonth: month,
+    endMonth: z.union([z.literal(""), month]).default(""),
+    current: checkbox,
+    description: text(5000),
+    skills: text(500).transform((v) =>
+      v
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .slice(0, 20),
+    ),
+    visible: checkbox,
+  })
+  .superRefine((v, ctx) => {
+    if (!v.current && !v.endMonth)
+      ctx.addIssue({ code: "custom", path: ["endMonth"], message: "Pick an end month or tick “I currently work here”" });
+    if (!v.current && v.endMonth && v.endMonth < v.startMonth) {
+      ctx.addIssue({ code: "custom", path: ["endMonth"], message: "End month must be after the start month" });
+    }
+  })
+  .transform(({ startMonth, endMonth, current, ...rest }) => ({
+    ...rest,
+    startDate: `${startMonth}-01`,
+    endDate: current ? null : `${endMonth}-01`,
+  }));
+
 export const serviceSchema = z.object({
   title: required(120),
   description: text(240),

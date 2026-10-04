@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Briefcase,
   ExternalLink,
   FolderKanban,
   Images,
@@ -23,6 +24,7 @@ const nav = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/profile", label: "Profile & Stats", icon: User },
   { href: "/admin/projects", label: "Projects", icon: FolderKanban },
+  { href: "/admin/experience", label: "Experience", icon: Briefcase },
   { href: "/admin/skills", label: "Skills", icon: Sparkles },
   { href: "/admin/services", label: "Services", icon: Wrench },
   { href: "/admin/media", label: "Media", icon: Images },

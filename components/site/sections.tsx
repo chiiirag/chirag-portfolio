@@ -1,8 +1,9 @@
-import { ArrowRight, Download, Mail, MapPin, MessageCircle, Phone, Star } from "lucide-react";
+import { ArrowRight, Briefcase, Download, Mail, MapPin, MessageCircle, Phone, Star } from "lucide-react";
 import Link from "next/link";
 import { SkillIcon } from "@/components/ui/skill-icon";
 import { SmartImage } from "@/components/ui/smart-image";
-import type { Profile, Project, Service, Skill, Stat } from "@/lib/db/schema";
+import { formatDuration, formatMonth } from "@/lib/dates";
+import type { Experience, Profile, Project, Service, Skill, Stat } from "@/lib/db/schema";
 import { DynamicIcon, GithubIcon, LinkedinIcon } from "@/lib/icons";
 import { telHref, whatsappHref } from "@/lib/utils";
 import { ContactForm } from "./contact-form";
@@ -180,6 +181,77 @@ export function ServicesStrip({ services }: { services: Service[] }) {
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+export function ExperienceSection({ experiences }: { experiences: Experience[] }) {
+  if (experiences.length === 0) return null;
+  return (
+    <section id="experience" className="card scroll-mt-24 p-6 sm:p-10">
+      <SectionHeader
+        eyebrow="Experience"
+        title="Where I've worked"
+        subtitle="Building and shipping mobile apps for product teams."
+      />
+      <ol className="relative mt-8 space-y-8 border-l-2 border-brand-100 pl-6 sm:pl-8">
+        {experiences.map((exp) => (
+          <li key={exp.id} className="relative">
+            <span
+              className="absolute top-1 -left-[calc(1.5rem+9px)] flex size-4 items-center justify-center rounded-full border-2 border-white bg-brand-600 ring-4 ring-brand-100 sm:-left-[calc(2rem+9px)]"
+              aria-hidden="true"
+            />
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+              <div className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                {exp.logoUrl ? (
+                  <SmartImage src={exp.logoUrl} alt={`${exp.company} logo`} fill sizes="48px" className="object-contain p-1" />
+                ) : (
+                  <Briefcase className="size-5 text-brand-600" aria-hidden="true" />
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h3 className="text-lg font-bold text-ink">{exp.role}</h3>
+                  <p className="text-sm font-medium text-brand-700">
+                    {formatMonth(exp.startDate)} – {exp.endDate ? formatMonth(exp.endDate) : "Present"}
+                    <span className="font-normal text-slate-500"> · {formatDuration(exp.startDate, exp.endDate)}</span>
+                  </p>
+                </div>
+                <p className="text-sm text-slate-700">
+                  {exp.companyUrl ? (
+                    <a
+                      href={exp.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold hover:text-brand-600"
+                    >
+                      {exp.company}
+                    </a>
+                  ) : (
+                    <span className="font-semibold">{exp.company}</span>
+                  )}
+                  {exp.employmentType && ` · ${exp.employmentType}`}
+                </p>
+                {(exp.location || exp.workMode) && (
+                  <p className="text-xs text-slate-500">{[exp.location, exp.workMode].filter(Boolean).join(" · ")}</p>
+                )}
+                {exp.description && (
+                  <p className="mt-3 text-sm leading-relaxed whitespace-pre-line text-slate-600">{exp.description}</p>
+                )}
+                {exp.skills.length > 0 && (
+                  <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Skills">
+                    {exp.skills.map((skill) => (
+                      <li key={skill} className="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700">
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 }

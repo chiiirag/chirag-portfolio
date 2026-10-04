@@ -5,7 +5,7 @@ import { desc, eq, like, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/session";
 import { getDb } from "@/lib/db";
-import { media, profile, projects, skills } from "@/lib/db/schema";
+import { experiences, media, profile, projects, skills } from "@/lib/db/schema";
 import { detectFileType } from "@/lib/file-type";
 import { MAX_UPLOAD_BYTES, mediaIdFromUrl, mediaUrl, type MediaItem, type MediaKind } from "@/lib/media";
 
@@ -90,7 +90,7 @@ export async function listMedia(kind?: MediaKind): Promise<MediaItem[]> {
 /** Lists where a media URL is still referenced, so in-use files can't be deleted by accident. */
 async function findUsage(url: string): Promise<string[]> {
   const db = getDb();
-  const [profileRows, projectRows, skillRows] = await Promise.all([
+  const [profileRows, projectRows, skillRows, experienceRows] = await Promise.all([
     db
       .select({ id: profile.id })
       .from(profile)
@@ -100,12 +100,14 @@ async function findUsage(url: string): Promise<string[]> {
       .from(projects)
       .where(or(eq(projects.coverImageUrl, url), eq(projects.logoUrl, url))),
     db.select({ name: skills.name }).from(skills).where(eq(skills.icon, url)),
+    db.select({ company: experiences.company }).from(experiences).where(eq(experiences.logoUrl, url)),
   ]);
 
   return [
     ...profileRows.map(() => "Profile"),
     ...projectRows.map((r) => `Project “${r.title}”`),
     ...skillRows.map((r) => `Skill “${r.name}”`),
+    ...experienceRows.map((r) => `Experience at ${r.company}`),
   ];
 }
 

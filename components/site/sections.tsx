@@ -259,10 +259,16 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
 export function AboutSection({ profile }: { profile: Profile }) {
   return (
     <section id="about" className="card scroll-mt-24 p-6 sm:p-10">
-      <div className="grid items-center gap-8 md:grid-cols-[220px_1fr]">
-        <div className="relative mx-auto aspect-square w-48 overflow-hidden rounded-3xl bg-gradient-to-br from-brand-100 to-brand-300 md:w-full">
+      <div className="grid items-start gap-8 md:grid-cols-[260px_1fr]">
+        <div className="relative aspect-[4/5] w-56 overflow-hidden rounded-3xl bg-gradient-to-br from-brand-100 to-brand-300 shadow-card sm:w-64 md:w-full">
           {profile.avatarUrl ? (
-            <SmartImage src={profile.avatarUrl} alt={profile.name} fill sizes="220px" className="object-cover" />
+            <SmartImage
+              src={profile.avatarUrl}
+              alt={profile.name}
+              fill
+              sizes="(min-width: 768px) 260px, 256px"
+              className="object-cover object-top"
+            />
           ) : (
             <span className="flex h-full items-center justify-center text-6xl font-extrabold text-brand-700">
               {profile.name

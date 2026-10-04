@@ -1,4 +1,5 @@
 import { ArrowRight, Briefcase, Download, Mail, MapPin, MessageCircle, Phone, Star } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { SkillIcon } from "@/components/ui/skill-icon";
 import { SmartImage } from "@/components/ui/smart-image";
@@ -6,8 +7,8 @@ import { formatDuration, formatMonth } from "@/lib/dates";
 import type { Experience, Profile, Project, Service, Skill, Stat } from "@/lib/db/schema";
 import { DynamicIcon, GithubIcon, LinkedinIcon } from "@/lib/icons";
 import { telHref, whatsappHref } from "@/lib/utils";
+import heroMockup from "@/public/hero-mockup.png";
 import { ContactForm } from "./contact-form";
-import { PhoneMockups } from "./phone-mockup";
 import { ProjectCard } from "./project-card";
 
 function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
@@ -64,9 +65,7 @@ export function Hero({ profile, stats }: { profile: Profile; stats: Stat[] }) {
 
         <div className="relative min-w-0">
           {profile.heroNote && (
-            <p className="absolute -top-2 right-0 z-10 hidden max-w-[10rem] rotate-[-4deg] text-right text-sm text-slate-700 italic xl:block">
-              {profile.heroNote}
-            </p>
+            <p className="mb-2 hidden rotate-[-3deg] text-right text-sm text-slate-700 italic xl:block">{profile.heroNote}</p>
           )}
           {profile.heroImageUrl ? (
             <div className="relative mx-auto aspect-square w-full max-w-md">
@@ -80,7 +79,14 @@ export function Hero({ profile, stats }: { profile: Profile; stats: Stat[] }) {
               />
             </div>
           ) : (
-            <PhoneMockups />
+            <Image
+              src={heroMockup}
+              alt="Two Flutter apps shown on smartphones: a ride-tracking app and a fitness app"
+              priority
+              placeholder="blur"
+              sizes="(min-width: 1280px) 34vw, (min-width: 1024px) 45vw, 92vw"
+              className="mx-auto h-auto w-full max-w-lg"
+            />
           )}
         </div>
       </div>

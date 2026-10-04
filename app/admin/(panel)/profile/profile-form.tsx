@@ -49,7 +49,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
               <ImageField
                 name="heroImageUrl"
                 label="Hero image"
-                hint="Optional. Leave empty to show the built-in phone mockups."
+                hint="Optional. Leave empty to use the default two-phone mockup."
                 defaultValue={profile.heroImageUrl}
                 errors={e.heroImageUrl}
               />

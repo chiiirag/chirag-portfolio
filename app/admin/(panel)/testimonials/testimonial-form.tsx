@@ -9,7 +9,7 @@ import type { Testimonial } from "@/lib/db/schema";
 
 const ratingOptions = [5, 4, 3, 2, 1].map((n) => ({ value: String(n), label: `${n} star${n > 1 ? "s" : ""}` }));
 
-export function TestimonialForm({ testimonial, uploadsEnabled }: { testimonial?: Testimonial; uploadsEnabled: boolean }) {
+export function TestimonialForm({ testimonial }: { testimonial?: Testimonial }) {
   return (
     <ActionForm action={saveTestimonial.bind(null, testimonial?.id ?? null)} className="space-y-6">
       {(state, pending) => {
@@ -36,7 +36,7 @@ export function TestimonialForm({ testimonial, uploadsEnabled }: { testimonial?:
                 maxLength={2000}
                 className="sm:col-span-2"
               />
-              <ImageField name="avatarUrl" label="Photo" defaultValue={testimonial?.avatarUrl} errors={e.avatarUrl} uploadsEnabled={uploadsEnabled} />
+              <ImageField name="avatarUrl" label="Photo" defaultValue={testimonial?.avatarUrl} errors={e.avatarUrl} />
               <SelectField name="rating" label="Rating" defaultValue={String(testimonial?.rating ?? 5)} options={ratingOptions} errors={e.rating} />
               <CheckboxField name="visible" label="Visible" hint="Show on the public site." defaultChecked={testimonial?.visible ?? true} />
               <TextField

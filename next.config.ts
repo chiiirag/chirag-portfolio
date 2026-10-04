@@ -11,9 +11,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
-    ],
+    // Uploaded media is served from /media/<id>; ids never change, so cache optimised variants for a long time.
+    minimumCacheTTL: 2678400,
   },
   experimental: {
     serverActions: {

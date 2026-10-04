@@ -1,4 +1,8 @@
-import { boolean, index, integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, customType, index, integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+
+const bytea = customType<{ data: Buffer; driverData: Buffer }>({
+  dataType: () => "bytea",
+});
 
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -111,6 +115,23 @@ export const messages = pgTable(
   ],
 );
 
+/** Uploaded files (images, resume PDF) stored in Postgres and served from /media/<id>. */
+export const media = pgTable(
+  "media",
+  {
+    // Random, unguessable id; also used in the public URL.
+    id: varchar("id", { length: 32 }).primaryKey(),
+    filename: varchar("filename", { length: 200 }).notNull(),
+    contentType: varchar("content_type", { length: 100 }).notNull(),
+    size: integer("size").notNull(),
+    width: integer("width"),
+    height: integer("height"),
+    data: bytea("data").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("media_created_at_idx").on(t.createdAt.desc())],
+);
+
 export type Profile = typeof profile.$inferSelect;
 export type Stat = typeof stats.$inferSelect;
 export type Skill = typeof skills.$inferSelect;
@@ -118,3 +139,4 @@ export type Project = typeof projects.$inferSelect;
 export type Testimonial = typeof testimonials.$inferSelect;
 export type Service = typeof services.$inferSelect;
 export type Message = typeof messages.$inferSelect;
+export type Media = Omit<typeof media.$inferSelect, "data">;

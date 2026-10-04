@@ -7,7 +7,7 @@ import { ImageField } from "@/components/admin/image-field";
 import { ActionForm } from "@/components/ui/action-form";
 import type { Profile } from "@/lib/db/schema";
 
-export function ProfileForm({ profile, uploadsEnabled }: { profile: Profile; uploadsEnabled: boolean }) {
+export function ProfileForm({ profile }: { profile: Profile }) {
   return (
     <ActionForm action={updateProfile} className="space-y-6">
       {(state, pending) => {
@@ -22,7 +22,6 @@ export function ProfileForm({ profile, uploadsEnabled }: { profile: Profile; upl
                 label="Profile photo"
                 defaultValue={profile.avatarUrl}
                 errors={e.avatarUrl}
-                uploadsEnabled={uploadsEnabled}
                 className="sm:col-span-2"
               />
             </FormSection>
@@ -53,7 +52,6 @@ export function ProfileForm({ profile, uploadsEnabled }: { profile: Profile; upl
                 hint="Optional. Leave empty to show the built-in phone mockups."
                 defaultValue={profile.heroImageUrl}
                 errors={e.heroImageUrl}
-                uploadsEnabled={uploadsEnabled}
               />
               <TextAreaField name="bio" label="Intro" defaultValue={profile.bio} errors={e.bio} rows={3} maxLength={1000} className="sm:col-span-2" />
             </FormSection>
@@ -66,7 +64,6 @@ export function ProfileForm({ profile, uploadsEnabled }: { profile: Profile; upl
                 kind="document"
                 defaultValue={profile.resumeUrl}
                 errors={e.resumeUrl}
-                uploadsEnabled={uploadsEnabled}
                 className="sm:col-span-2"
               />
             </FormSection>

@@ -3,7 +3,7 @@
 Personal portfolio with a built-in admin panel. Next.js 16 (App Router), Tailwind CSS v4, Drizzle ORM and Neon Postgres. Deploys to Vercel.
 
 - **Public site** — `/`, `/projects`, `/projects/[slug]`. Pages are statically generated and regenerated as soon as content changes in the admin panel.
-- **Admin panel** — `/admin`. Manage the profile, hero stats, projects, skills, testimonials and services, and read contact-form messages.
+- **Admin panel** — `/admin`. Manage the profile, hero stats, projects, skills, testimonials and services, upload images to the media library, and read contact-form messages.
 
 ## Environment variables
 
@@ -16,7 +16,6 @@ Copy `.env.example` to `.env.local` and fill it in. Add the same values in **Ver
 | `ADMIN_PASSWORD_HASH` | ✅ | Generate with `npm run hash-password` |
 | `SESSION_SECRET` | ✅ | Random string, 32+ chars (`openssl rand -base64 48`) |
 | `NEXT_PUBLIC_SITE_URL` | ✅ | Public URL without trailing slash, e.g. `https://chiragdafda.vercel.app` |
-| `BLOB_READ_WRITE_TOKEN` | optional | Enables image/PDF uploads (Vercel Blob). Without it, paste image URLs instead. |
 
 ## Local development
 
@@ -33,9 +32,8 @@ Open http://localhost:3000 and http://localhost:3000/admin.
 
 1. Push the repo to GitHub and import it in Vercel.
 2. Add the environment variables above (Production + Preview).
-3. Optional: **Storage → Create → Blob**, then connect it to the project to enable uploads.
-4. Run `npm run db:migrate` (and `db:seed` once) against the Neon database **before the first deploy**, because the build pre-renders pages from the database.
-5. Deploy.
+3. Run `npm run db:migrate` (and `db:seed` once) against the Neon database **before the first deploy**, because the build pre-renders pages from the database.
+4. Deploy.
 
 ## Database migrations
 
@@ -63,6 +61,18 @@ Never edit a migration that has already been applied; add a new one instead. `db
 | `npm run db:seed` | Insert starter content into empty tables |
 | `npm run db:studio` | Browse the database with Drizzle Studio |
 | `npm run hash-password` | Generate `ADMIN_PASSWORD_HASH` |
+
+## Media library
+
+Images and PDFs uploaded in the admin panel are stored in the `media` table in Neon and served from `/media/<id>`:
+
+- Upload from **Admin → Media**, or with **Upload from PC** / **Choose from library** on any image field.
+- Large photos are resized in the browser (max 2000px, WebP) before upload; files must be 4MB or smaller.
+- Files are checked by their actual contents (PNG, JPG, WebP, GIF, AVIF, PDF only).
+- Responses are cached by the browser and Vercel's CDN for a year, so most visits never touch the database.
+- A file that's still used by the profile, a project, a testimonial or a skill can't be deleted.
+
+Neon's free plan includes 0.5 GB of storage, which fits several hundred compressed images.
 
 ## Skill icons
 

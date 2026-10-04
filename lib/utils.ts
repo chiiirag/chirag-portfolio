@@ -16,15 +16,9 @@ export function isExternalUrl(value: string): boolean {
   return /^https?:\/\//i.test(value);
 }
 
-/** True for raster images on hosts configured in next.config.ts `images.remotePatterns`. */
+/** True for same-origin raster images (e.g. /media/<id>), which next/image can resize. External URLs are shown as-is. */
 export function canOptimizeImage(src: string): boolean {
-  try {
-    const { hostname, pathname } = new URL(src, "http://local");
-    if (pathname.toLowerCase().endsWith(".svg")) return false;
-    return (src.startsWith("/") && !src.startsWith("//")) || hostname.endsWith(".public.blob.vercel-storage.com");
-  } catch {
-    return false;
-  }
+  return src.startsWith("/") && !src.startsWith("//") && !src.toLowerCase().endsWith(".svg");
 }
 
 export function telHref(phone: string): string {

@@ -31,7 +31,7 @@ export default async function EditTestimonialPage({ params }: PageProps<"/admin/
           />
         }
       />
-      <TestimonialForm testimonial={testimonial} uploadsEnabled={Boolean(process.env.BLOB_READ_WRITE_TOKEN)} />
+      <TestimonialForm testimonial={testimonial} />
     </>
   );
 }

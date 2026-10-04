@@ -3,6 +3,7 @@
 import {
   ExternalLink,
   FolderKanban,
+  Images,
   Inbox,
   LayoutDashboard,
   LogOut,
@@ -26,6 +27,7 @@ const nav = [
   { href: "/admin/skills", label: "Skills", icon: Sparkles },
   { href: "/admin/testimonials", label: "Testimonials", icon: MessageSquareQuote },
   { href: "/admin/services", label: "Services", icon: Wrench },
+  { href: "/admin/media", label: "Media", icon: Images },
   { href: "/admin/messages", label: "Messages", icon: Inbox, badge: true },
 ];
 

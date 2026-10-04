@@ -7,7 +7,7 @@ import { ImageField } from "@/components/admin/image-field";
 import { ActionForm } from "@/components/ui/action-form";
 import type { Project } from "@/lib/db/schema";
 
-export function ProjectForm({ project, uploadsEnabled }: { project?: Project; uploadsEnabled: boolean }) {
+export function ProjectForm({ project }: { project?: Project }) {
   return (
     <ActionForm action={saveProject.bind(null, project?.id ?? null)} className="space-y-6">
       {(state, pending) => {
@@ -63,8 +63,8 @@ export function ProjectForm({ project, uploadsEnabled }: { project?: Project; up
             </FormSection>
 
             <FormSection title="Images">
-              <ImageField name="coverImageUrl" label="Cover image" defaultValue={project?.coverImageUrl} errors={e.coverImageUrl} uploadsEnabled={uploadsEnabled} />
-              <ImageField name="logoUrl" label="App logo" defaultValue={project?.logoUrl} errors={e.logoUrl} uploadsEnabled={uploadsEnabled} />
+              <ImageField name="coverImageUrl" label="Cover image" defaultValue={project?.coverImageUrl} errors={e.coverImageUrl} />
+              <ImageField name="logoUrl" label="App logo" defaultValue={project?.logoUrl} errors={e.logoUrl} />
             </FormSection>
 
             <FormSection title="Links">

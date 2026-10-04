@@ -10,7 +10,7 @@ export default async function NewProjectPage() {
   return (
     <>
       <PageHeader title="New project" />
-      <ProjectForm uploadsEnabled={Boolean(process.env.BLOB_READ_WRITE_TOKEN)} />
+      <ProjectForm />
     </>
   );
 }

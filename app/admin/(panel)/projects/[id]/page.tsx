@@ -31,7 +31,7 @@ export default async function EditProjectPage({ params }: PageProps<"/admin/proj
           />
         }
       />
-      <ProjectForm project={project} uploadsEnabled={Boolean(process.env.BLOB_READ_WRITE_TOKEN)} />
+      <ProjectForm project={project} />
     </>
   );
 }

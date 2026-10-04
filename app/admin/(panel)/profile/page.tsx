@@ -16,7 +16,7 @@ export default async function ProfilePage() {
       <PageHeader title="Profile & Stats" description="Your personal details, hero copy, contact info and headline numbers." />
       <div className="space-y-6">
         <StatsManager stats={stats.map(({ id, value, label, sortOrder }) => ({ id, value, label, sortOrder }))} />
-        <ProfileForm profile={profile} uploadsEnabled={Boolean(process.env.BLOB_READ_WRITE_TOKEN)} />
+        <ProfileForm profile={profile} />
       </div>
     </>
   );

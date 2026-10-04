@@ -28,7 +28,6 @@ export function ProfileForm({ profile }: { profile: Profile }) {
 
             <FormSection title="Hero section" description="The first thing visitors see.">
               <TextField name="badge" label="Badge" defaultValue={profile.badge} errors={e.badge} maxLength={80} />
-              <TextField name="heroNote" label="Handwritten note" defaultValue={profile.heroNote} errors={e.heroNote} maxLength={120} />
               <TextField
                 name="headline"
                 label="Headline"

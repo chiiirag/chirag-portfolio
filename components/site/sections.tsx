@@ -48,9 +48,6 @@ export function Hero({ profile }: { profile: Profile }) {
         </div>
 
         <div className="relative min-w-0">
-          {profile.heroNote && (
-            <p className="mb-2 hidden rotate-[-3deg] text-right text-sm text-slate-700 italic xl:block">{profile.heroNote}</p>
-          )}
           {profile.heroImageUrl ? (
             <div className="relative mx-auto aspect-square w-full max-w-md">
               <SmartImage

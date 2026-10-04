@@ -22,7 +22,6 @@ export const profile = pgTable("profile", {
   headlineHighlight: varchar("headline_highlight", { length: 80 }).notNull().default(""),
   bio: text("bio").notNull().default(""),
   about: text("about").notNull().default(""),
-  heroNote: varchar("hero_note", { length: 120 }).notNull().default(""),
   heroImageUrl: text("hero_image_url").notNull().default(""),
   avatarUrl: text("avatar_url").notNull().default(""),
   email: varchar("email", { length: 200 }).notNull().default(""),

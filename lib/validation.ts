@@ -26,7 +26,6 @@ export const profileSchema = z.object({
   headlineHighlight: text(80),
   bio: text(1000),
   about: text(5000),
-  heroNote: text(120),
   heroImageUrl: url,
   avatarUrl: url,
   email: z.union([z.literal(""), z.string().trim().email("Enter a valid email").max(200)]),

@@ -34,7 +34,6 @@ I'm comfortable joining at any stage:
 Available for remote full-time roles, hourly work and contract projects. If you have a Flutter product that needs to be built, fixed, improved, or shipped, let's talk.
 
 And yes, I do read the whole ticket before asking, "Have you tried restarting it?" 😄`,
-  heroNote: "You bring the idea. I'll bring the Flutter.",
   heroImageUrl: "",
   avatarUrl: "",
   email: "",

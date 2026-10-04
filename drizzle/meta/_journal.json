@@ -36,6 +36,13 @@
       "when": 1791112149217,
       "tag": "0004_drop_stats",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791112662218,
+      "tag": "0005_drop_hero_note",
+      "breakpoints": true
     }
   ]
 }

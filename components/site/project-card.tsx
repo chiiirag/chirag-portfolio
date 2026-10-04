@@ -1,28 +1,35 @@
-import { ArrowRight, Smartphone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { SmartImage } from "@/components/ui/smart-image";
 import type { Project } from "@/lib/db/schema";
 import { StoreIcons } from "./store-links";
 
-export function ProjectCard({ project }: { project: Project }) {
+// One gradient per card, assigned by position so neighbouring cards never share a colour.
+// Full class names are listed so Tailwind includes them in the build.
+const GRADIENTS = [
+  "from-blue-600 via-indigo-600 to-violet-700",
+  "from-emerald-500 via-teal-500 to-cyan-600",
+  "from-orange-500 via-rose-500 to-pink-600",
+  "from-violet-600 via-purple-600 to-fuchsia-600",
+  "from-sky-500 via-blue-500 to-indigo-600",
+  "from-amber-500 via-orange-500 to-red-500",
+  "from-pink-500 via-fuchsia-500 to-purple-600",
+  "from-teal-500 via-emerald-600 to-green-700",
+];
+
+export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
   const href = `/projects/${project.slug}`;
+  const gradient = GRADIENTS[index % GRADIENTS.length];
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/70 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-lg">
-      <Link href={href} className="relative block aspect-[4/3] overflow-hidden bg-gradient-to-br from-navy via-brand-900 to-brand-700">
-        {project.coverImageUrl ? (
-          <SmartImage
-            src={project.coverImageUrl}
-            alt={`${project.title} screenshot`}
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center">
-            <Smartphone className="size-16 text-white/30" strokeWidth={1.2} aria-hidden="true" />
-          </div>
-        )}
+      <Link
+        href={href}
+        className={`relative block aspect-[4/3] overflow-hidden bg-gradient-to-br ${gradient}`}
+        aria-label={`View ${project.title}`}
+      >
+        <span className="absolute -top-10 -right-10 size-40 rounded-full bg-white/20 blur-2xl" aria-hidden="true" />
+        <span className="absolute -bottom-12 -left-8 size-36 rounded-full bg-black/10 blur-2xl" aria-hidden="true" />
       </Link>
 
       <div className="relative flex flex-1 flex-col p-5 pt-7">

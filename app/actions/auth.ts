@@ -31,6 +31,12 @@ export async function login(_prev: ActionState, formData: FormData): Promise<Act
     return { ok: false, message: "Admin login is not configured on the server." };
   }
 
+  if (!/^scrypt:[0-9a-f]{32}:[0-9a-f]{128}$/.test(passwordHash)) {
+    console.error(
+      "ADMIN_PASSWORD_HASH is not a valid hash. Run `npm run hash-password` and paste its output (it starts with `scrypt:`), not the plain password.",
+    );
+  }
+
   // Always run the (slow) hash check so response time doesn't reveal whether the email matched.
   const passwordOk = await verifyPassword(parsed.data.password, passwordHash);
   const emailOk = safeEqual(parsed.data.email, adminEmail);
